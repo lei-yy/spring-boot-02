@@ -1,9 +1,6 @@
 package com.lyy.springboot02.word.service;
 
-import com.github.pagehelper.PageInfo;
-import com.lyy.springboot02.word.pojo.City;
 import com.lyy.springboot02.word.pojo.Country;
-import com.lyy.springboot02.word.pojo.SearchVo;
 
 import java.util.List;
 

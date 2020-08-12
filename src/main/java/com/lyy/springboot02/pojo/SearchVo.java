@@ -1,4 +1,4 @@
-package com.lyy.springboot02.word.pojo;
+package com.lyy.springboot02.pojo;
 
 public class SearchVo {
 	public final static int DEFAULT_CURRENT_PAGE = 1;

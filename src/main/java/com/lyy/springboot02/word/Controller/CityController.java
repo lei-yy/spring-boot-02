@@ -1,8 +1,9 @@
 package com.lyy.springboot02.word.Controller;
 
 import com.github.pagehelper.PageInfo;
+import com.lyy.springboot02.pojo.Result;
 import com.lyy.springboot02.word.pojo.City;
-import com.lyy.springboot02.word.pojo.SearchVo;
+import com.lyy.springboot02.pojo.SearchVo;
 import com.lyy.springboot02.word.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,5 +32,29 @@ public class CityController {
     @RequestMapping("/city/{countyId}")
     public List<City> selectByCountyId(@PathVariable int countyId){
         return cityService.selectCity(countyId);
+    }
+
+    //127.0.0.1/city/deleteByCityId/
+    @DeleteMapping("/deleteByCityId/{cityId}")
+    public Result<City> deleteByCityId(@PathVariable int cityId){
+        return cityService.deleteByCityId(cityId);
+    }
+
+    //127.0.0.1/city/updateByCity
+    @PutMapping(value = "/updateByCity",consumes = "application/x-www-form-urlencoded")
+    public Result<City> updateByCity(@ModelAttribute City city){
+        return cityService.updateByCity(city);
+    }
+
+    //127.0.0.1/city/insertByCity
+    @PostMapping(value = "insertByCity" ,consumes = "application/json")
+    public Result<City> insertByCity(@RequestBody City city){
+        return cityService.insertByCity(city);
+    }
+
+    //127.0.0.1/city/selectCitiesBySearchVo
+    @PostMapping("/selectCitiesBySearchVo")
+    public PageInfo<City> selectCitiesBySearchVo(SearchVo searchVo){
+        return cityService.selectCitiesBySearchVo(searchVo);
     }
 }
