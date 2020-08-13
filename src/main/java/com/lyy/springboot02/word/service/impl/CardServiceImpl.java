@@ -6,7 +6,10 @@ import com.lyy.springboot02.pojo.SearchVo;
 import com.lyy.springboot02.word.pojo.Card;
 import com.lyy.springboot02.word.repository.CardRepository;
 import com.lyy.springboot02.word.service.CardService;
+import net.bytebuddy.description.type.TypeDefinition;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,16 +26,31 @@ import java.util.Optional;
 public class CardServiceImpl implements CardService {
     @Autowired
     private CardRepository cardRepository;
+
+
     @Override
-    public PageInfo<Card> selectByPage(SearchVo searchVo) {
+    public Page<Card> selectByPage(SearchVo searchVo) {
         searchVo.initSearchVo();
-        return new PageInfo<>(Optional.ofNullable(cardRepository.findAll()).orElse(Collections.emptyList()));
+        //确定排序方向
+        Sort.Direction direction="desc".equalsIgnoreCase(searchVo.getSort())?
+                Sort.Direction.DESC:Sort.Direction.ASC;
+        //确定通过什么排序，如果没有就cardId排序
+        Sort sort=new Sort(direction, StringUtils.isBlank(searchVo.getOrderBy())?
+                "cardId":searchVo.getOrderBy());
+        Card card=new Card();
+        card.setCardNo(searchVo.getKeyWord());
+        Pageable pageable= PageRequest.of(searchVo.getCurrentPage()-1,searchVo.getPageSize(),sort);
+        ExampleMatcher matcher=ExampleMatcher.matching()
+                .withMatcher("cardNo",match ->match.contains())
+                .withIgnorePaths("cardId");
+        Example<Card> example=Example.of(card,matcher);
+        return cardRepository.findAll(example,pageable);
     }
 
     @Override
     @Transactional
     public Result<Card> insertByCard(Card card) {
-        cardRepository.save(card);
+        cardRepository.saveAndFlush(card);
         return new Result<Card>(Result.status.SUCCESS.status,"insert success",card);
     }
 
@@ -45,7 +63,7 @@ public class CardServiceImpl implements CardService {
     @Override
     @Transactional
     public Result<Card> updateByCardId(Card card) {
-        cardRepository.flush();
+        cardRepository.save(card);
         return new Result<Card>(Result.status.SUCCESS.status,"update success",card);
     }
 }

@@ -20,18 +20,19 @@ public class CountyController {
     @Autowired
     CountryService countryService;
 
-//asf
+    //asf
     @RequestMapping("/selectByCountyId/{countyId}")
-    public List selectByCountyId(@PathVariable int countyId){
+    public List selectByCountyId(@PathVariable int countyId) {
         return countryService.selectByCountyId(countyId);
     }
+
     @PostMapping("/selectByCountyIdCity/{countyId}")
-    public List<Country> selectByCountyIdCity(@PathVariable int countyId){
+    public List<Country> selectByCountyIdCity(@PathVariable int countyId) {
         return countryService.selectByCountyIdCity(countyId);
     }
 
     @PostMapping("/selectByNameCity")
-    public List<Country> selectByNameCity(@RequestParam String name){
+    public List<Country> selectByNameCity(@RequestParam String name) {
         return countryService.selectByName(name);
     }
 }

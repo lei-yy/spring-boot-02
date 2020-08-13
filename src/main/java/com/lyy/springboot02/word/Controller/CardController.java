@@ -1,6 +1,6 @@
 package com.lyy.springboot02.word.Controller;
 
-import com.github.pagehelper.PageInfo;
+import org.springframework.data.domain.Page;
 import com.lyy.springboot02.pojo.Result;
 import com.lyy.springboot02.pojo.SearchVo;
 import com.lyy.springboot02.word.pojo.Card;
@@ -21,8 +21,8 @@ public class CardController {
     CardService cardService;
 
     //127.0.0.1/card/selectByPage
-    @PostMapping("/selectByPage")
-    public PageInfo<Card> selectByPage(@RequestBody SearchVo searchVo){
+    @PostMapping(value = "/selectByPage",consumes = "application/json")
+    public Page<Card> selectByPage(@RequestBody SearchVo searchVo){
         return cardService.selectByPage(searchVo);
     }
 
@@ -33,14 +33,15 @@ public class CardController {
     }
 
     //127.0.0.1/card/deleteByCardId
-    @DeleteMapping("/deleteByCardId")
+    @DeleteMapping("/deleteByCardId/{cardId}")
     public void deleteByCardId(@PathVariable int cardId){
         cardService.deleteByCardId(cardId);
     }
 
     //127.0.0.1/card/updateByCardId
     @PutMapping(value = "/updateByCardId",consumes = "application/x-www-form-urlencoded;charset=UTF-8")
-    public Result<Card> updateByCardId(@RequestBody Card card){
+    public Result<Card> updateByCardId(@ModelAttribute Card card){
+        System.err.println("card = ========================" + card);
         return cardService.updateByCardId(card);
     }
 

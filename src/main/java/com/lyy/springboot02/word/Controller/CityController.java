@@ -53,8 +53,8 @@ public class CityController {
     }
 
     //127.0.0.1/city/selectCitiesBySearchVo
-    @PostMapping("/selectCitiesBySearchVo")
-    public PageInfo<City> selectCitiesBySearchVo(SearchVo searchVo){
+    @PostMapping(value = "/selectCitiesBySearchVo",consumes = "application/json")
+    public PageInfo<City> selectCitiesBySearchVo(@RequestBody SearchVo searchVo){
         return cityService.selectCitiesBySearchVo(searchVo);
     }
 }
