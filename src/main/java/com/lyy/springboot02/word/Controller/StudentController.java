@@ -20,6 +20,7 @@ import java.util.List;
 public class StudentController {
     @Autowired
     private StudentService studentService;
+
     //127.0.0.1/student/findByStudentName
     @RequestMapping("/findByStudentName")
     public List<Student>  findByStudentName(@RequestParam String studentName){
