@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.lyy.springboot02.word.pojo.Country;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
  * @create: 2020-08-11 16:17
  **/
 @Mapper
-@Component
+@Repository
 public interface CountryDao {
     @Select("select * from m_country where country_id=#{countyId}")
     List<Country> selectByCountyId(int countyId);
@@ -22,15 +23,15 @@ public interface CountryDao {
 
 
     @Select(value = "select * from m_country where country_id=#{countyId}")
-    @Results(id = "selectByCountyfindCity",value = {
+    @Results(id = "selectByCountyFindCity",value = {
             @Result(column = "country_id",property = "countryId"),
         @Result(column = "country_id" ,property = "cities",
             javaType = List.class,
             many =@Many(select = "com.lyy.springboot02.word.dao.CityDao.selectCity"))
     })
-    List<Country> selectByCountyIdCity(int countyId);
+    Country selectByCountyIdCity(int countyId);
 
     @Select("select * from m_country where country_name=#{name}")
-    @ResultMap("selectByCountyfindCity")
+    @ResultMap("selectByCountyFindCity")
     List<Country> selectByName(String name);
 }

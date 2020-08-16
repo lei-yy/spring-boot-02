@@ -14,6 +14,9 @@ public interface CountryService {
 
     List<Country> selectByCountyId(int countyId);
 
-    List<Country> selectByCountyIdCity(int countyId);
+    Country selectByCountyIdCity(int countyId);
     List<Country> selectByName(String name);
+
+    Country mograteCountryByRedis(int countyId);
+
 }
