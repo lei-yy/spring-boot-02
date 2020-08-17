@@ -52,7 +52,7 @@ public class TestControllerOne {
         map.addAttribute("country", country);
         map.addAttribute("cities", cities);
         map.addAttribute("updateCityUri", "/api/city");
-        map.addAttribute("template","test/index");
+//        map.addAttribute("template","test/index");
         return "index";
     }
 }

@@ -1,5 +1,6 @@
 package com.lyy.springboot02.Controller;
 
+import com.lyy.springboot02.interceptor.RequestViewInterceptor;
 import com.lyy.springboot02.pojo.ApplicationTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +9,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @program: spring-boot-02
@@ -37,11 +41,16 @@ public class TestController {
     private ApplicationTest applicationTest;
 
 
+
+    //127.0.0.1/tc/test?paramKey=fuck
     @GetMapping("/test")
     @ResponseBody
-    public String test(){
-        return "hello spring-boot";
+    public String test(HttpServletRequest request, @RequestParam String paramKey) {
+        String value = request.getParameter("paramKey");
+
+        return "hello spring-boot" + value + "==" + paramKey;
     }
+
     @GetMapping("/logTest")
     @ResponseBody
     public String logTest() {

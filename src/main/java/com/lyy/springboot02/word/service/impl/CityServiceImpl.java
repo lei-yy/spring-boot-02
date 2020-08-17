@@ -2,6 +2,7 @@ package com.lyy.springboot02.word.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.lyy.springboot02.aspect.ServiceAnnotation;
 import com.lyy.springboot02.pojo.Result;
 import com.lyy.springboot02.word.dao.CityDao;
 import com.lyy.springboot02.word.pojo.City;
@@ -34,6 +35,7 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
+    @ServiceAnnotation(value = "bbb")
     public List<City> selectCity(int countyId) {
         return dao.selectCity(countyId);
     }
