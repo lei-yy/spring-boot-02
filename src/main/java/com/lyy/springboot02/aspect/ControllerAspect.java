@@ -1,6 +1,7 @@
 package com.lyy.springboot02.aspect;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,8 +58,8 @@ public class ControllerAspect {
 
     }
     @Around(value = "com.lyy.springboot02.aspect.ControllerAspect.controllerPointCut()")
-    public void around(){
+    public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         LOGGER.debug("------------this is around----------");
-
+        return joinPoint.proceed(joinPoint.getArgs());
     }
 }
