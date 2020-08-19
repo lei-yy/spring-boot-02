@@ -75,6 +75,7 @@ public class TestControllerOne {
         try {
             resource = new UrlResource(
                     Paths.get("D:\\1\\upload\\" + fileName).toUri());
+
             if (resource.exists() && resource.isReadable()) {
                 return ResponseEntity
                         .ok()
@@ -92,9 +93,8 @@ public class TestControllerOne {
 
     @PostMapping(value = "/files",consumes = "multipart/form-data")
     public String uploadFiles(@RequestParam MultipartFile[] files, RedirectAttributes redirectAttributes) {
-        if (files == null) {
-            redirectAttributes.addFlashAttribute(
-                    "message", "Please select file.");
+        boolean empty=true;
+
             try {
                 for (MultipartFile file : files) {
                     if (file.isEmpty()) {
@@ -103,14 +103,23 @@ public class TestControllerOne {
                     String destFilePath = "D:\\1\\upload\\" + file.getOriginalFilename();
                     File destFile = new File(destFilePath);
                     file.transferTo(destFile);
-                    redirectAttributes.addFlashAttribute("message", "Upload file success.");
+                    empty=false;
                 }
+
+                if (empty) {
+                    redirectAttributes.addFlashAttribute(
+                            "message", "Please select file.");
+                } else {
+                    redirectAttributes.addFlashAttribute(
+                            "message", "Upload file success.");
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
                 redirectAttributes.addFlashAttribute(
                         "message", "Upload file failed.");
             }
-        }
+
         return "redirect:/test/index";
 
     }
@@ -119,7 +128,8 @@ public class TestControllerOne {
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Please select file.");
 
-            return "redirect:test/index";
+            return "redirect:/test/index";
+
         }
 
         try {
