@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.PageHelper;
 import com.lyy.springboot02.model.dao.UserDao;
 import com.lyy.springboot02.model.dao.UserRoleDao;
+import com.lyy.springboot02.model.entity.Role;
 import com.lyy.springboot02.model.entity.User;
 import com.lyy.springboot02.model.service.UserService;
 import com.lyy.springboot02.pojo.Result;
@@ -50,6 +51,14 @@ public class UserServiceImpl implements UserService {
         user.setPassword(MD5Util.getMD5(user.getPassword()));
         user.setCreateDate(LocalDateTime.now());
         userDao.insertUser(user);
+
+        userRoleDao.deleteUserRoleByUserId(user.getUserId());
+        List<Role> roles = user.getRoles();
+        if (roles != null && !roles.isEmpty()) {
+            roles.stream().forEach(item -> {
+                userRoleDao.insertUserRole(user.getUserId(), item.getRoleId());
+            });
+        }
         return new Result<User>(Result.status.SUCCESS.status,"注册成功",user);
 
     }
@@ -67,11 +76,18 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public Result<User> updateByUser(User user) {
         User user1=userDao.findUserByUserName(user.getUserName());
-        if (user1!=null && user1.getUserName()!=user.getUserName()){
+        if (user1!=null && user1.getUserId()!=user.getUserId()){
             return new Result<User>(Result.status.SUCCESS.status,"名字重复了",user);
 
         }
         userDao.updateByUserId(user);
+        userRoleDao.deleteUserRoleByUserId(user.getUserId());
+        List<Role> roles = user.getRoles();
+        if (roles != null && !roles.isEmpty()) {
+            roles.stream().forEach(item -> {
+                userRoleDao.insertUserRole(user.getUserId(), item.getRoleId());
+            });
+        }
         return new Result<User>(Result.status.SUCCESS.status,"update success",user);
     }
 

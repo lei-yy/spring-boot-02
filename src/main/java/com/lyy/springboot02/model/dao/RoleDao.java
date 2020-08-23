@@ -18,4 +18,9 @@ import java.util.List;
 public interface RoleDao {
     @Select("select * from role")
     List<Role> getRoles();
+
+    @Select("select * from role r " +
+            "left join user_role ur on r.role_id = ur.role_id " +
+            "where ur.user_id = #{userId}")
+    List<Role> getRolesByUserId(int userId);
 }
