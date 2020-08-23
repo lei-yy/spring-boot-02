@@ -20,7 +20,7 @@ public class DataController {
     private UserService userService;
 
     @PostMapping(value = "/login",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String login(@RequestBody User user){
+    public Result<User> login(@RequestBody User user){
         return userService.findUserByUserName(user);
     }
     @PostMapping(value = "/register",consumes = MediaType.APPLICATION_JSON_VALUE)

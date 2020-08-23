@@ -5,7 +5,7 @@
 
 <br>
 
-<p th:text="${message}"></p>
+    <p th:text="${message}"></p>
 <p>上传文件，使用multipart/form-data类型</p>
 <form action="/test/file" method="post" enctype="multipart/form-data">
     <input type="file" name="file">
@@ -55,7 +55,7 @@ checkbox:<input type="text" th:attr="type=${changeType}" th:checked="${checked}"
 <!--/*@thymesVar id="city" type=""*/-->
 
 <a th:href="@{/test/index(pageSize=${city.cityId},currentPage='1')}" th:text="${city.cityName}"></a>
-<img th:src="@{${shopLogo}}"/>
+<!--<img th:src="@{${shopLogo}}"/>-->
 <!--/*@thymesVar id="shopLogo" type=""*/-->
 
 <p>==================================================================</p>

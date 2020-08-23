@@ -24,4 +24,16 @@ public class LoginController {
         System.out.println("进来了");
         return "indexLogin";
     }
+    @RequestMapping("/dashboard")
+    public String dashboard(){
+        return "index";
+    }
+    @RequestMapping("/dashboard2")
+    public String dashboard2(){
+        return "index";
+    }
+    @RequestMapping("/users")
+    public String users(){
+        return "index";
+    }
 }
