@@ -2,6 +2,7 @@ package com.lyy.springboot02.model.service.Impl;
 
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.PageHelper;
+import com.lyy.springboot02.config.ResourceConfigBean;
 import com.lyy.springboot02.model.dao.UserDao;
 import com.lyy.springboot02.model.dao.UserRoleDao;
 import com.lyy.springboot02.model.entity.Role;
@@ -13,7 +14,11 @@ import com.lyy.springboot02.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.jws.soap.SOAPBinding;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Date;
@@ -32,6 +37,8 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
     @Autowired
     private UserRoleDao userRoleDao;
+    @Autowired
+    private ResourceConfigBean resourceConfigBean;
     @Override
     public Result<User> findUserByUserName(User user) {
         User user1 = userDao.findUserByUserName(user.getUserName());
@@ -101,5 +108,42 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByUserId(int userId) {
         return userDao.getUserByUserId(userId);
+    }
+
+    @Override
+    public Result<String> uploadUserImg(MultipartFile file) {
+        if(file.isEmpty()){
+            return new Result<String>(Result.status.FAILED.status,"Please select img",null);
+        }
+        String relativePath = "";
+        String destFilePath = "";
+        try {
+            String osName = System.getProperty("os.name");
+            if(osName.toLowerCase().startsWith("win")){
+                destFilePath=resourceConfigBean.getLocationPathForWindows()+file.getOriginalFilename();
+            }else {
+                destFilePath=resourceConfigBean.getLocationPathForLinux()+file.getOriginalFilename();
+            }
+            relativePath=resourceConfigBean.getRelativePath()+file.getOriginalFilename();
+            File destFile=new File(destFilePath);
+            file.transferTo(destFile);
+
+        }catch (IOException e){
+            e.printStackTrace();
+            return new Result<String>(Result.status.FAILED.status,"upload failed",null);
+        }
+
+        return new Result<String>(Result.status.SUCCESS.status,"upload success",relativePath);
+    }
+
+    @Override
+    public Result<User> updateUserImg(User user) {
+        User user1=userDao.getUserByUserName(user.getUserName());
+        if(user1!=null && user1.getUserId()!=user.getUserId()){
+            return new Result<User>(Result.status.FAILED.status, "User name is repeat.",user);
+        }
+        userDao.updateByUserId(user);
+
+        return new Result<User>(Result.status.SUCCESS.status, "Edit success",user);
     }
 }

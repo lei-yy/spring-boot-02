@@ -3,6 +3,8 @@ package com.lyy.springboot02.utils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.DigestUtils;
 
+import java.util.HashMap;
+
 /**
  * MD5 Util，密码加密
  * @author: HymanHu
@@ -20,6 +22,7 @@ public class MD5Util {
 	}
 	
 	public static void main(String[] args) {
+
 		System.out.println(MD5Util.getMD5("111"));
 	}
 }

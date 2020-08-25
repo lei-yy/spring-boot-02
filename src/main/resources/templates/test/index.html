@@ -1,62 +1,93 @@
 <div class="right_col" role="main">
+    <div id="vueTest">
+        <h3>文本绑定</h3>
+        <div>{{title}}</div>
+        <h3>属性绑定</h3>
+        <input type="text" v-bind:value="username"><br>
+        <input type="text" :value="password"><br>
+        <input type="text" v-model="username"><br>
+        test<input type="button" v-on:click="t1()" value="t1"><br>
+        test2<input type="button" @click="t2()" value="t2"><br>
+    </div>
 
-<h3>file upload and downlod</h3>
-<a href="/test/file?fileName=111.png">download file</a>
+    <script type="text/javascript">
+        var vue = new Vue({
+            el: "#vueTest",
+            data: {
+                title: "vue Test",
+                username: "lyy",
+                password: "222",
+                step: 1,
+                total: 0,
+            },
+            method: {
+                t1: function () {
+                    alert(this.username)
+                },
+                t2:function () {
+                    alert(this.name)
+                }
+            }
+        })
+    </script>
 
-<br>
+
+    <h3>file upload and downlod</h3>
+    <a href="/test/file?fileName=111.png">download file</a>
+
+    <br>
 
     <p th:text="${message}"></p>
-<p>上传文件，使用multipart/form-data类型</p>
-<form action="/test/file" method="post" enctype="multipart/form-data">
-    <input type="file" name="file">
-    <button type="submit">上传</button>
-</form>
-<br>
+    <p>上传文件，使用multipart/form-data类型</p>
+    <form action="/test/file" method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <button type="submit">上传</button>
+    </form>
+    <br>
 
-<form action="/test/files" method="post" enctype="multipart/form-data">
-    <input type="file" name="files">
-    <input type="file" name="files">
-    <button type="submit">上传</button>
-</form>
+    <form action="/test/files" method="post" enctype="multipart/form-data">
+        <input type="file" name="files">
+        <input type="file" name="files">
+        <button type="submit">上传</button>
+    </form>
 
 
+    <h3>th:text</h3>
+    <h1 th:text="${thymeleafTitle}">this is thymeleaf title</h1>
+    <!--/*@thymesVar id="thymeleafTitle" type=""*/-->
+    <p th:text="${thymeleafTitle}">this is the thymeleaf ti-tle</p>
+    <p>==================================================================</p>
 
-<h3>th:text</h3>
-<h1 th:text="${thymeleafTitle}">this is thymeleaf title</h1>
-<!--/*@thymesVar id="thymeleafTitle" type=""*/-->
-<p th:text="${thymeleafTitle}">this is the thymeleaf ti-tle</p>
-<p>==================================================================</p>
+    <h3>th:if,th:unless.</h3>
 
-<h3>th:if,th:unless.</h3>
+    <p th:if="${checked} == true">If true, this will display</p>
+    <!--/*@thymesVar id="checked" type=""*/-->
 
-<p th:if="${checked} == true">If true, this will display</p>
-<!--/*@thymesVar id="checked" type=""*/-->
+    <p th:unless="${checked} == false">If not false, this will display</p>
+    <p th:if="${currentNumber}&lt;100">print if the currentNumber &lt;100</p>
+    <!--/*@thymesVar id="currentNumber" type=""*/-->
 
-<p th:unless="${checked} == false">If not false, this will display</p>
-<p th:if="${currentNumber}&lt;100">print if the currentNumber &lt;100</p>
-<!--/*@thymesVar id="currentNumber" type=""*/-->
+    <p th:if="${thymeleafTitle} == null">name is null</p>
+    <p>==================================================================</p>
 
-<p th:if="${thymeleafTitle} == null">name is null</p>
-<p>==================================================================</p>
+    <h3>th:attr</h3>
+    checkbox:<input type="text" th:attr="type=${changeType}" th:checked="${checked}"/>
+    <!--/*@thymesVar id="changeType" type=""*/-->
 
-<h3>th:attr</h3>
-checkbox:<input type="text" th:attr="type=${changeType}" th:checked="${checked}"/>
-<!--/*@thymesVar id="changeType" type=""*/-->
+    <p>==================================================================</p>
 
-<p>==================================================================</p>
+    <h3>url,href</h3>
+    <a th:href="@{http://www.baidu.com}" target="_blank">Click it to turn to baidu</a><br>
+    <a th:href="${baiduUrl}" target="_blank">Click it to turn to Shop beauty</a><br>
+    <!--/*@thymesVar id="baiduUrl" type=""*/-->
 
-<h3>url,href</h3>
-<a th:href="@{http://www.baidu.com}" target="_blank">Click it to turn to baidu</a><br>
-<a th:href="${baiduUrl}" target="_blank">Click it to turn to Shop beauty</a><br>
-<!--/*@thymesVar id="baiduUrl" type=""*/-->
+    <!-- 封装动态url、url查询参数 -->
+    <a th:href="@{'/test/index/'+${city.cityId}}" th:text="${city.cityName}"></a>
+    <!--/*@thymesVar id="city" type=""*/-->
 
-<!-- 封装动态url、url查询参数 -->
-<a th:href="@{'/test/index/'+${city.cityId}}" th:text="${city.cityName}"></a>
-<!--/*@thymesVar id="city" type=""*/-->
+    <a th:href="@{/test/index(pageSize=${city.cityId},currentPage='1')}" th:text="${city.cityName}"></a>
+    <!--<img th:src="@{${shopLogo}}"/>-->
+    <!--/*@thymesVar id="shopLogo" type=""*/-->
 
-<a th:href="@{/test/index(pageSize=${city.cityId},currentPage='1')}" th:text="${city.cityName}"></a>
-<!--<img th:src="@{${shopLogo}}"/>-->
-<!--/*@thymesVar id="shopLogo" type=""*/-->
-
-<p>==================================================================</p>
+    <p>==================================================================</p>
 </div>

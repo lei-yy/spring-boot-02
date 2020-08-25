@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @program: spring-boot-02
@@ -36,5 +37,13 @@ public class UserController {
     @GetMapping("/user/{userId}")
     public User getUserByUserId(@PathVariable int userId){
         return userService.getUserByUserId(userId);
+    }
+    @PostMapping(value = "/userImg",consumes = "multipart/form-data")
+    public Result<String> userImg(@RequestParam MultipartFile file){
+        return userService.uploadUserImg(file);
+    }
+    @PutMapping(value = "/updateImg",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Result<User> updateImg(@RequestBody User user){
+        return userService.updateUserImg(user);
     }
 }

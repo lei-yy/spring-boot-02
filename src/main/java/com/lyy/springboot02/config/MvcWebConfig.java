@@ -2,6 +2,7 @@ package com.lyy.springboot02.config;
 
 import com.lyy.springboot02.filter.ParameterFilter;
 import com.lyy.springboot02.interceptor.RequestViewInterceptor;
+import com.sun.org.apache.xalan.internal.xsltc.compiler.LocationPathPattern;
 import org.apache.catalina.connector.Connector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +14,9 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -27,9 +30,23 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class MvcWebConfig  implements WebMvcConfigurer{
     @Autowired
     private RequestViewInterceptor viewInterceptor;
+    @Autowired
+    private ResourceConfigBean resourceConfigBean;
 
     @Value("${com.port}")
     private int port;
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        String systemName=System.getProperty("os.name");
+        if (systemName.startsWith("win")){
+            registry.addResourceHandler(resourceConfigBean.getRelativePathPattern())
+                    .addResourceLocations(ResourceUtils.FILE_URL_PREFIX+ resourceConfigBean.getLocationPathForWindows());
+        }else {
+            registry.addResourceHandler(resourceConfigBean.getRelativePathPattern())
+                    .addResourceLocations(ResourceUtils.FILE_URL_PREFIX+ resourceConfigBean.getLocationPathForLinux());
+        }
+    }
 
     @Bean
     public Connector connector(){
