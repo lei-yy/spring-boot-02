@@ -29,7 +29,6 @@ public class User implements Serializable{
 	private String userImg;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private LocalDateTime createDate;
-
 	@Transient
 	private String accountName;
 	

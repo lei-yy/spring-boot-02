@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -73,4 +74,5 @@ public class MvcWebConfig  implements WebMvcConfigurer{
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(viewInterceptor).addPathPatterns("/**");//将所有的请求纳入到拦截器中
     }
+
 }

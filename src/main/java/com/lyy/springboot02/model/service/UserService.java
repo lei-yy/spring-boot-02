@@ -22,4 +22,7 @@ public interface UserService {
     Result<String> uploadUserImg(MultipartFile file);
 
     Result<User> updateUserImg(User user);
+
+    User getUserByUserName(String username);
+    public void logout();
 }
