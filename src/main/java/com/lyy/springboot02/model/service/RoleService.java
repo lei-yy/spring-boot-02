@@ -1,6 +1,9 @@
 package com.lyy.springboot02.model.service;
 
+import com.github.pagehelper.PageInfo;
 import com.lyy.springboot02.model.entity.Role;
+import com.lyy.springboot02.model.entity.User;
+import com.lyy.springboot02.pojo.SearchVo;
 
 import java.util.List;
 
@@ -12,4 +15,5 @@ import java.util.List;
  **/
 public interface RoleService {
     List<Role> getRoles();
+    PageInfo<Role> findAllRole(SearchVo searchVo);
 }

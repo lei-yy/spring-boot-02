@@ -81,7 +81,7 @@
             data: JSON.stringify(user),
             success: function (data) {
                 if (data.status == 200) {
-                    location.href = "/user/dashboard";
+                    location.href = "/user/users";
                 } else {
                     layer.msg(data.message, {icon: 0})
                 }

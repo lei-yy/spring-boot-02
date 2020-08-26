@@ -1,12 +1,11 @@
 package com.lyy.springboot02.model.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.lyy.springboot02.model.entity.Role;
 import com.lyy.springboot02.model.service.RoleService;
+import com.lyy.springboot02.pojo.SearchVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +23,9 @@ public class RoleController {
     @GetMapping("/findAllRoles")
     public List<Role> findAllRoles(){
         return roleService.getRoles();
+    }
+    @PostMapping("/getAllRoles")
+    public PageInfo<Role> getAllRoles(@RequestBody SearchVo searchVo){
+        return roleService.findAllRole(searchVo);
     }
 }

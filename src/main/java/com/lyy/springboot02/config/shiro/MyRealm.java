@@ -1,7 +1,9 @@
 package com.lyy.springboot02.config.shiro;
 
+import com.lyy.springboot02.model.entity.Resource;
 import com.lyy.springboot02.model.entity.Role;
 import com.lyy.springboot02.model.entity.User;
+import com.lyy.springboot02.model.service.ResourceService;
 import com.lyy.springboot02.model.service.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -23,6 +25,8 @@ import java.util.List;
 public class MyRealm extends AuthorizingRealm {
     @Autowired
     private UserService userService;
+    @Autowired
+    private ResourceService resourceService;
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
@@ -32,6 +36,12 @@ public class MyRealm extends AuthorizingRealm {
         if (roles != null && !roles.isEmpty()) {
             for (Role role : roles) {
                 simpleAuthorizationInfo.addRole(role.getRoleName());
+                List<Resource> resourceList = resourceService.getResourcesByRoleId(role.getRoleId());
+                if (resourceList!=null && resourceList.isEmpty()){
+                    for (Resource resource : resourceList) {
+                        simpleAuthorizationInfo.addStringPermission(resource.getPermission());
+                    }
+                }
             }
         }
 
