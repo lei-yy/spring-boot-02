@@ -18,6 +18,7 @@ import java.util.List;
 @Mapper
 @Component
 public interface CityDao {
+
     @Select("select * from m_city where country_id=#{countryId}")
     List<City> select(int countryId);
 

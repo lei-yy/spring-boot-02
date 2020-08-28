@@ -9,6 +9,7 @@ import com.lyy.springboot02.pojo.SearchVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.Cookie;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +34,7 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public Resource getResourceById(int resourceId) {
+
         return resourceDao.getResourceById(resourceId);
     }
 
