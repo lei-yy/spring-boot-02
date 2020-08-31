@@ -1,21 +1,19 @@
 package com.example.springcloudaccount.model.service.Impl;
 
 import com.example.springcloudaccount.model.dao.UserDao;
-import com.example.springcloudaccount.model.entity.Result;
+import com.example.springcloudaccount.model.entity.City;
 import com.example.springcloudaccount.model.entity.SearchVo;
 import com.example.springcloudaccount.model.entity.User;
+import com.example.springcloudaccount.model.service.TestFeignClient;
 import com.example.springcloudaccount.model.service.UserService;
 import com.github.pagehelper.PageHelper;
-
 import com.github.pagehelper.PageInfo;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.client.RestTemplate;
 
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +28,10 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
-
+    @Autowired
+    private RestTemplate restTemplate;
+    @Autowired
+    private TestFeignClient testFeignClient;
     @Override
     public PageInfo<User> findAllUser(SearchVo searchVo) {
         searchVo.initSearchVo();
@@ -41,9 +42,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+//    @HystrixCommand(fallbackMethod = "getUserByUserIdFallbackMethod")
     public User getUserByUserId(int userId) {
-        return userDao.getUserByUserId(userId);
+        User user = userDao.getUserByUserId(userId);
+//        List<City> cities = restTemplate.getForObject(
+//                "http://client-test/city/city/{countyId}", List.class,
+//                522);
+        List<City> cities=testFeignClient.getCitiesByCountryId(522);
+        user.setCities(cities);
+        return user;
     }
 
-
+    public User getUserByUserIdFallbackMethod(int userId) {
+        User user = userDao.getUserByUserId(userId);
+        user.setCities(new ArrayList<City>());
+        return user;
+    }
 }

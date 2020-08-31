@@ -51,6 +51,8 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
+		<!-- hystrix -->
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -79,9 +81,13 @@
 
 	<build>
 		<plugins>
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
