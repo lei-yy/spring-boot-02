@@ -45,10 +45,11 @@ public class TestController {
     //127.0.0.1/tc/test?paramKey=fuck
     @GetMapping("/test")
     @ResponseBody
-    public String test(HttpServletRequest request, @RequestParam String paramKey) {
-        String value = request.getParameter("paramKey");
+    public String test(HttpServletRequest request, @RequestParam String paramKey,@RequestParam String key) {
+        System.out.println(paramKey+"======="+key);
+        String value = request.getParameter("paramKey")+request.getParameter("key");
 
-        return "hello spring-boot" + value + "==" + paramKey;
+        return "hello spring-boot" + value + "==" + paramKey+"------"+key;
     }
 
     @GetMapping("/logTest")

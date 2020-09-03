@@ -38,7 +38,7 @@ public class RequestViewInterceptor implements HandlerInterceptor {
         }
         String template = (String) modelAndView.getModelMap().get("template");
         if (StringUtils.isBlank(template)) {
-            LOGGER.debug("+++++++++++++++++++++++"+path.toLowerCase());
+
             modelAndView.getModelMap().addAttribute("template", path.toLowerCase());
         }
         HandlerInterceptor.super.preHandle(request, response, handler);

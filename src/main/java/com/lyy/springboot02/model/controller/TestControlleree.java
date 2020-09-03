@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  **/
 @RestController
 @RequestMapping("/data")
-public class DataController {
+public class TestControlleree {
     @Autowired
     private UserService userService;
 
