@@ -13,7 +13,8 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @program: spring-boot-02
@@ -42,6 +43,7 @@ public class MyRealm extends AuthorizingRealm {
                         simpleAuthorizationInfo.addStringPermission(resource.getPermission());
                     }
                 }
+
             }
         }
 

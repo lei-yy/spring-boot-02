@@ -1,0 +1,98 @@
+一，选择题
+	以下哪个不是python解释器 D
+		CPython
+		IPython
+		Jython
+		py
+	下列哪个表达式在Python中是非法的？B
+		x = y = z = 1
+		x = (y = z + 1)
+		x, y = y, x
+		x += y
+	print("%d %% %d"%(3, 5)) 输出结果是？A
+		3 % 5
+		3 %% 5
+		2
+		1
+	“今年第一季度GDP提高了x%”，x为float值，格式化字符串，x保留两位小数，下面哪个是正确的？A
+		print("今年第一季度GDP提高了%.2f"%(22.234,))
+		print("今年第一季度GDP提高了%.2f%"%(22.234,))
+		print("今年第一季度GDP提高了%.2f%%"%(22.234,))
+		print("今年第一季度GDP提高了{0}%".format(22.234))
+	l = ["cdsa", 32, 33.2, None, True];l.pop();print(l);打印结果是：C
+		["cdsa", 32, 33.2, True]
+		["cdsa", 32, None, True]
+		["cdsa", 32, 33.2, None]
+		[32, 33.2, None, True]
+	print(15 // 2);C
+		1
+		7
+		7.5
+		8
+	下面哪个不是 python 的数据类型 D
+		int
+		str
+		set
+		double
+	*args 代表什么参数 C
+		位置参数
+		可变参数
+		可变关键字参数
+		命名关键字参数
+	函数多个返回值，实际上返回的是什么数据类型？ C
+		list
+		set
+		tuple
+		dict
+	安装Django2.0.7版本，使用的什么命令？C
+		pip install django
+		pip install django=2.0.7
+		pip install django==2.0.7
+		pip install django version=2.0.7
+
+二、填空题
+	字符串前面添加u、r、b分别代表什么？ 
+		答：加u表示Unicode编码，支持汉字与数字，加r代表非转义字符，加b代表bytes
+	requests模块请求远程服务器，如何设置相应编码？
+		答：request.encoding='',''放编码的格式
+	windows下执行python的方式；
+		答：输入python进入python ，然后输入python+带.py的文件
+	创建python package，会自动生成什么文件？
+		答：会自动生成一个__init__.py文件
+	python变量作用域有哪些？
+		答：局部变量，全局变量
+
+三、问答题
+	python命名规则？
+		答：不能以数字开头，区分大小写，不能有空格
+	set删除操作中，pop、remove的区别？
+		答：pop删除第一个元素，remove(x)删除第一次符合x的元素
+	list使用+=和append函数的区别？
+		答：+=是将集合结合在一起，append是将后面的集合看作一个整体存入list中
+		
+	使用bs4解析响应内容，获取某div（class为aaa）下所有span节点；
+		答：bs.find(name='span',attrs={'class':'aaa'}).find_all(name='span')
+		
+	简述Django操作流程、组件的作用；
+		答：创建一个django项目 ---> 通过djiango startproject name 命令创建app,app里面有model,test,view等模块，model用来存放实体bean，
+			test是一个测试模块，view是视图层，url里面调用view里面的方法，页面上就可以得到view里面的数据
+
+四、编程题
+	定义一个函数，接受 0 个或多个参数，返回累计乘积；
+	def a(*args):
+    mul=1;
+    for i in args:
+        mul=mul*i;
+    return mul;
+	
+	定义一个函数，去掉字符串前后的空格；
+	def str(str):
+    str=""+str;
+    s='';
+    list=str.split(' ')
+    for i in list:
+        if i!=' ':
+            print(i)
+            s+=i;
+    print(s)
+    return s

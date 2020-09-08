@@ -46,6 +46,7 @@ public class Result<T> {
     }
     //创建status枚举类
     public enum status{
+
         SUCCESS(200),FAILED(500);
         public int status;
 
